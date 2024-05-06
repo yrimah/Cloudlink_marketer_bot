@@ -16,12 +16,12 @@ Before you begin, ensure you have met the following requirements:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yrimah/ai_whats_bot.git
+   git clone https://github.com/yrimah/Cloudlink_marketer_bot.git
 
 2. Install dependencies and set up environment variables:
 
     ```bash
-    cd ai_whats_bot
+    cd Cloudlink_marketer_bot
     pip install -r requirements.txt
 
     Create a .env file in the root directory and add the following variables:
