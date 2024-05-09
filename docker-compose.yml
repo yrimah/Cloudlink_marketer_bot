@@ -3,7 +3,6 @@ version: '3.8'
 volumes:
   chat_bot_data:
     driver: local
-    # name: chat_bot_data
 
 networks:
   default:
@@ -24,7 +23,6 @@ services:
     volumes:
       - chat_bot_data:/app
     entrypoint: "./docker-entrypoint.sh"
-    # command: 
     restart: always
 
   openai:
@@ -35,21 +33,6 @@ services:
       - "1337:1337"
       - "7900:7900"
     shm_size: "2g"
-    volumes:
-      - ./hardir:/app/hardir
     restart: always
 
-  # ngrok:
-  #   container_name: ngrok
-  #   image: ngrok/ngrok
-  #   # ports:
-  #   #   - "80:80"
-  #   env_file:
-  #     - .env
-  #   command: "ngrok http 80"
-  #   depends_on:
-  #     - chat_bot
-  #   restart: always
-
-# docker run -p 8080:8080 -p 1337:1337 -p 7900:7900 --shm-size="2g" -v ${PWD}/hardir:/app/hardir hlohaus789/g4f:latest
 # docker run --net=host -it -e NGROK_AUTHTOKEN=2fmaTYip56StKwzSTlfMIVcZYkM_2i57Fs8jZxDXrcQQZ3CMP ngrok/ngrok:latest http 80

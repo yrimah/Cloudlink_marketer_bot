@@ -16,21 +16,21 @@ VERIFY_TOKEN = os.getenv("VERIFY_TOKEN")
 # Dictionary to store session state for each user
 sessions = {}
 
-# @app.route('/', methods=['POST', 'GET'])
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['POST', 'GET'])
+# @app.route('/', methods=['POST'])
 def receive_message():
-    # if request.method == 'GET':
-    #     mode = request.args.get('hub.mode')
-    #     verify_token = request.args.get('hub.verify_token')
-    #     challenge = request.args.get('hub.challenge')
+    if request.method == 'GET':
+        mode = request.args.get('hub.mode')
+        verify_token = request.args.get('hub.verify_token')
+        challenge = request.args.get('hub.challenge')
 
-    #     if mode and verify_token:
-    #         if mode == 'subscribe' and verify_token == VERIFY_TOKEN:
-    #             return Response(challenge, 200)
-    #         else:
-    #             return Response("", 403)
-    #     else:
-    #         return Response("", 400)
+        if mode and verify_token:
+            if mode == 'subscribe' and verify_token == VERIFY_TOKEN:
+                return Response(challenge, 200)
+            else:
+                return Response("", 403)
+        else:
+            return Response("", 400)
 
     if request.method == 'POST':
         body = request.get_json()
@@ -66,9 +66,9 @@ def ai_response(session_id, user_question):
     # Generate response based on the updated conversation history and current message
     conversation = " ---- ".join(conversation_history)
     # add a text of how you want the bot to behave
-    static_txt = "..."
+    static_txt = user_question
     # Generate response based on the current message
-    print(static_txt)
+    print("The question " + static_txt)
     completion = client.chat.completions.create(
         messages=[
             {"role": "user", "content": f"{static_txt}"},
@@ -89,6 +89,7 @@ def send_message(to, message):
         "type": "text",
         "text": {"body": message}
     }
+    # print(message)
     response = requests.post(url, json=data, headers=headers)
 
 if __name__ == '__main__':
